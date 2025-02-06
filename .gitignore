@@ -1,0 +1,10 @@
+# Ignore Pytorch bytecode files and directories
+__pycache__/
+
+# Ignore ML experiment folders
+mlruns/
+
+# Ignore trained ML models
+vgg11_trained_model.pth
+inceptionv1_trained_model.pth
+resnet34_trained_model.pth
