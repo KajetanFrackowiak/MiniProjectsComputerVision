@@ -84,6 +84,7 @@ class Decoder(nn.Module):
 def vae_loss(x_recon, x, mu, logvar):
     # mse_loss pixel by pixel
     recon_loss = F.mse_loss(x_recon, x, reduction="sum")
+    # KL(Normal(mu, sigma^2 || Normal(0, 1)))
     kl_loss = 0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp())
     loss = recon_loss - kl_loss
     return loss, recon_loss, kl_loss
