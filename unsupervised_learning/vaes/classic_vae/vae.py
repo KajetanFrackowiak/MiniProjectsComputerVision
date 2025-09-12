@@ -6,23 +6,11 @@ import torch.nn.functional as F
 class Encoder(nn.Module):
     def __init__(self, latent_dim):
         super().__init__()
-        # conv1: 32x32 -> 16x16
-        self.conv1 = nn.Conv2d(
-            3, 32, kernel_size=4, stride=2, padding=1
-        )  # (32 x 16 x 16)
-        # conv2: 16x16 -> 8x8
-        self.conv2 = nn.Conv2d(
-            32, 64, kernel_size=4, stride=2, padding=1
-        )  # (64 x 8 x 8)
-        self.conv3 = nn.Conv2d(
-            64, 128, kernel_size=2, stride=2, padding=1
-        )  # (128 x 5 x 5)
-        self.conv4 = nn.Conv2d(
-            128, 256, kernel_size=2, stride=1, padding=0
-        ) # (256 x 4 x 4)
-        self.conv5 = nn.Conv2d(
-            256, 512, kernel_size=2, stride=1, padding=0
-        ) # (512, 3, 3)
+        self.conv1 = nn.Conv2d(3, 32, kernel_size=4, stride=2, padding=1) # (batch_size, 32, 16, 16)
+        self.conv2 = nn.Conv2d(32, 64, kernel_size=4, stride=2, padding=1) # (batch_size, 64, 8, 8)
+        self.conv3 = nn.Conv2d(64, 128, kernel_size=2, stride=1, padding=0) # (batch_size, 128, 5, 5)
+        self.conv4 = nn.Conv2d(128, 256, kernel_size=4, stride=1, padding=0) # (batch_size, 256, 4, 4)
+        self.conv5 = nn.Conv2d(256, 512, kernel_size=2, stride=1, padding=0) # (batch_size, 512, 3, 3)
         self.fc = nn.Linear(512 * 3 * 3, 2 * latent_dim)
 
     def forward(self, x):
