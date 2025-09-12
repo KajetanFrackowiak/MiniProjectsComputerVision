@@ -35,23 +35,14 @@ def reparameterize(mu, logvar):
 class Decoder(nn.Module):
     def __init__(self, latent_dim):
         super().__init__()
-        # decoder takes a single latent vector z of size latent_dim
         self.fc = nn.Linear(latent_dim, 512 * 3 * 3)
-        self.deconv1 = nn.ConvTranspose2d(
-            512, 256, kernel_size=2, stride=1, padding=0
-        )
-        self.deconv2 = nn.ConvTranspose2d(
-            256, 128, kernel_size=2, stride=1, padding=0
-        )
-        self.deconv3 = nn.ConvTranspose2d(
-            128, 64, kernel_size=2, stride=2, padding=1
-        )  # 4->8a gdzie tam jest vl
-        self.deconv4 = nn.ConvTranspose2d(
-            64, 32, kernel_size=4, stride=2, padding=1
-        )  # 8->16
-        self.deconv5 = nn.ConvTranspose2d(
-            32, 3, kernel_size=4, stride=2, padding=1
-        )  # 16->32
+        self.deconv1 = nn.ConvTranspose2d(512, 256, kernel_size=2, stride=1, padding=0)
+        self.deconv2 = nn.ConvTranspose2d(256, 128, kernel_size=2, stride=1, padding=0)
+        self.deconv3 = nn.ConvTranspose2d(128, 64, kernel_size=4, stride=2, padding=1)
+        self.deconv4 = nn.ConvTranspose2d(64, 32, kernel_size=4, stride=2, padding=1)
+        self.deconv5 = nn.ConvTranspose2d(32, input_dim, kernel_size=4, stride=2, padding=1)
+
+    
 
     def forward(self, x):
         x = F.relu(self.fc(x))
