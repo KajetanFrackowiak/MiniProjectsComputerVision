@@ -15,10 +15,6 @@ transform = transforms.Compose(
 
 
 def transform_batch(batch):
-    # transforms.ToTensor() returns a torch.Tensor which isn't directly
-    # JSON-serializable for the datasets arrow table. Convert to numpy so
-    # the column can be stored. We'll call set_format(type='torch') below
-    # so DataLoader yields torch.Tensors again.
     return {"pixel_values": [transform(img).numpy() for img in batch["img"]]}
 
 
