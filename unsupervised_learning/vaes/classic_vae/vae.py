@@ -6,7 +6,6 @@ import torch.nn.functional as F
 class Encoder(nn.Module):
     def __init__(self, latent_dim):
         super().__init__()
-        # in_channels = 3 (RGB)
         # conv1: 32x32 -> 16x16
         self.conv1 = nn.Conv2d(
             3, 32, kernel_size=4, stride=2, padding=1
@@ -15,16 +14,12 @@ class Encoder(nn.Module):
         self.conv2 = nn.Conv2d(
             32, 64, kernel_size=4, stride=2, padding=1
         )  # (64 x 8 x 8)
-        # out3 = floor((8 + 2 * 1 - 1(3 - 1) - 1)/2 + 1) = floor((8+2-1-1)/2 + 1 = floor(8/2) + 1) = 4 + 1 = 5
         self.conv3 = nn.Conv2d(
             64, 128, kernel_size=2, stride=2, padding=1
         )  # (128 x 5 x 5)
-        # out3 = floor((5 + 2*0 - 1(2 - 1) - 1)/1 + 1) = floor(5-1-1 + 1) = floor(4)
         self.conv4 = nn.Conv2d(
             128, 256, kernel_size=2, stride=1, padding=0
         ) # (256 x 4 x 4)
-        # map to mu and logvar
-        # out5 = floor((4 + 2*0 - 1(2 - 1) - 1)/1 + 1) = floor((4-1-1)+1) = floor(3)
         self.conv5 = nn.Conv2d(
             256, 512, kernel_size=2, stride=1, padding=0
         ) # (512, 3, 3)
