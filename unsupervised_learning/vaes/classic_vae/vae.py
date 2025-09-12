@@ -40,7 +40,7 @@ class Decoder(nn.Module):
         self.deconv2 = nn.ConvTranspose2d(256, 128, kernel_size=2, stride=1, padding=0)
         self.deconv3 = nn.ConvTranspose2d(128, 64, kernel_size=4, stride=2, padding=1)
         self.deconv4 = nn.ConvTranspose2d(64, 32, kernel_size=4, stride=2, padding=1)
-        self.deconv5 = nn.ConvTranspose2d(32, input_dim, kernel_size=4, stride=2, padding=1)
+        self.deconv5 = nn.ConvTranspose2d(32, 3, kernel_size=4, stride=2, padding=1)
 
     
 
