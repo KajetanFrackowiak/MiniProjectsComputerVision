@@ -1,5 +1,0 @@
-hidden_dim: 64
-outer_learning_rate: 0.001
-inner_steps: 3
-inner_learning_rate: 0.01
-epochs: 100
