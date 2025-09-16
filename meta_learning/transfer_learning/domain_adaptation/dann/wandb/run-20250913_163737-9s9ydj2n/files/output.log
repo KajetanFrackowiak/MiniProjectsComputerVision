@@ -1,0 +1,46 @@
+Traceback (most recent call last):
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/meta_learning/transfer_learning/domain_adaptation/dann/main.py", line 50, in <module>
+    main()
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/meta_learning/transfer_learning/domain_adaptation/dann/main.py", line 46, in main
+    train_total_losses, train_source_losses, train_target_losses = trainer.train()
+                                                                   ^^^^^^^^^^^^^^^
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/meta_learning/transfer_learning/domain_adaptation/dann/training.py", line 130, in train
+    self.train_one_epoch(epoch)
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/meta_learning/transfer_learning/domain_adaptation/dann/training.py", line 92, in train_one_epoch
+    total_loss, domain_loss_source, domain_loss_target = self.train_step(source_batch, target_batch, alpha)
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/meta_learning/transfer_learning/domain_adaptation/dann/training.py", line 65, in train_step
+    class_output_source, domain_output_source = self.model(images_source, alpha)
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kajetan/miniconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kajetan/miniconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1844, in _call_impl
+    return inner()
+           ^^^^^^^
+  File "/home/kajetan/miniconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1790, in inner
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/meta_learning/transfer_learning/domain_adaptation/dann/dann.py", line 84, in forward
+    features = self.feature(x)
+               ^^^^^^^^^^^^^^^
+  File "/home/kajetan/miniconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kajetan/miniconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/meta_learning/transfer_learning/domain_adaptation/dann/dann.py", line 36, in forward
+    x = self.bn2(x)
+        ^^^^^^^^^^^
+  File "/home/kajetan/miniconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kajetan/miniconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kajetan/miniconda3/lib/python3.11/site-packages/torch/nn/modules/batchnorm.py", line 160, in forward
+    self._check_input_dim(input)
+  File "/home/kajetan/miniconda3/lib/python3.11/site-packages/torch/nn/modules/batchnorm.py", line 341, in _check_input_dim
+    raise ValueError(f"expected 2D or 3D input (got {input.dim()}D input)")
+ValueError: expected 2D or 3D input (got 4D input)

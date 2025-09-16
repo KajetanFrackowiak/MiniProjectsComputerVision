@@ -1,0 +1,44 @@
+{
+  "os": "Linux-5.15.133.1-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+  "python": "CPython 3.11.9",
+  "startedAt": "2025-09-13T14:25:45.899077Z",
+  "args": [
+    "--train"
+  ],
+  "program": "/home/kajetan/Documents/MiniProjectsComputerVision/meta_learning/transfer_learning/domain_adaptation/dann/main.py",
+  "codePath": "meta_learning/transfer_learning/domain_adaptation/dann/main.py",
+  "git": {
+    "remote": "https://github.com/KajetanFrackowiak/MiniProjectsComputerVision.git",
+    "commit": "0bf2dcc3b096ddb0733fdaeed36b6ca049312d50"
+  },
+  "email": "kajtek.gdynia@gmail.com",
+  "root": "/home/kajetan/Documents/MiniProjectsComputerVision/meta_learning/transfer_learning/domain_adaptation/dann",
+  "host": "Kajetandell",
+  "executable": "/home/kajetan/miniconda3/bin/python",
+  "codePathLocal": "main.py",
+  "cpu_count": 8,
+  "cpu_count_logical": 16,
+  "gpu": "NVIDIA GeForce GTX 1650",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "1081101176832",
+      "used": "227614769152"
+    }
+  },
+  "memory": {
+    "total": "16630747136"
+  },
+  "cpu": {
+    "count": 8,
+    "countLogical": 16
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA GeForce GTX 1650",
+      "memoryTotal": "4294967296",
+      "architecture": "Turing"
+    }
+  ],
+  "cudaVersion": "13.0"
+}

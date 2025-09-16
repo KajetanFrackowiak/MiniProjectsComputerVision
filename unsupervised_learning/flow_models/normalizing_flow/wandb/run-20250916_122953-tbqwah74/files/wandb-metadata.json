@@ -1,0 +1,46 @@
+{
+  "os": "Linux-5.15.133.1-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+  "python": "CPython 3.11.9",
+  "startedAt": "2025-09-16T10:29:53.708452Z",
+  "args": [
+    "--train",
+    "--flow_type",
+    "planar_flow"
+  ],
+  "program": "/home/kajetan/Documents/MiniProjectsComputerVision/unsupervised_learning/flow_models/normalizing_flow/main.py",
+  "codePath": "unsupervised_learning/flow_models/normalizing_flow/main.py",
+  "git": {
+    "remote": "https://github.com/KajetanFrackowiak/MiniProjectsComputerVision.git",
+    "commit": "5d84990781fdd39ccd3b7ab5df4feb37b51e33bc"
+  },
+  "email": "kajtek.gdynia@gmail.com",
+  "root": "/home/kajetan/Documents/MiniProjectsComputerVision/unsupervised_learning/flow_models/normalizing_flow",
+  "host": "Kajetandell",
+  "executable": "/home/kajetan/miniconda3/bin/python",
+  "codePathLocal": "main.py",
+  "cpu_count": 8,
+  "cpu_count_logical": 16,
+  "gpu": "NVIDIA GeForce GTX 1650",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "1081101176832",
+      "used": "229455904768"
+    }
+  },
+  "memory": {
+    "total": "16630747136"
+  },
+  "cpu": {
+    "count": 8,
+    "countLogical": 16
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA GeForce GTX 1650",
+      "memoryTotal": "4294967296",
+      "architecture": "Turing"
+    }
+  ],
+  "cudaVersion": "13.0"
+}

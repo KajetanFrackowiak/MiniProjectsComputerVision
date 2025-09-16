@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/meta_learning/transfer_learning/domain_adaptation/dann/main.py", line 50, in <module>
+    main()
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/meta_learning/transfer_learning/domain_adaptation/dann/main.py", line 46, in main
+    train_total_losses, train_source_losses, train_target_losses = trainer.train()
+                                                                   ^^^^^^^^^^^^^^^
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/meta_learning/transfer_learning/domain_adaptation/dann/training.py", line 125, in train
+    self.train_one_epoch(epoch)
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/meta_learning/transfer_learning/domain_adaptation/dann/training.py", line 87, in train_one_epoch
+    total_loss, domain_loss_source, domain_loss_target = self.train_step(source_batch, target_batch, alpha)
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/meta_learning/transfer_learning/domain_adaptation/dann/training.py", line 58, in train_step
+    batch_size_target = images_target.size(0)
+                        ^^^^^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'size'

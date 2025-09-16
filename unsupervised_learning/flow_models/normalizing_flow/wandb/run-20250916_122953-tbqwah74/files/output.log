@@ -1,0 +1,18 @@
+Traceback (most recent call last):                                                                                                                                                          
+Epoch 1/200 - Avg Total Loss: 419.0366, Recon Loss: 395.3111, KL Loss: 23.7256
+Epoch 2/200 - Avg Total Loss: 294.2362, Recon Loss: 263.3363, KL Loss: 30.8999
+Epoch 3/200 - Avg Total Loss: 250.6011, Recon Loss: 216.2192, KL Loss: 34.3819
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/unsupervised_learning/flow_models/normalizing_flow/main.py", line 79, in <module>
+    main()
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/unsupervised_learning/flow_models/normalizing_flow/main.py", line 68, in main
+    train_total_losses, train_recon_losses, train_kl_losses = trainer.train()
+                                                              ^^^^^^^^^^^^^^^
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/unsupervised_learning/flow_models/normalizing_flow/training.py", line 104, in train
+    self.train_one_epoch(epoch)
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/unsupervised_learning/flow_models/normalizing_flow/training.py", line 59, in train_one_epoch
+    loss, recon_loss, kl_loss, pixels, recon = self.train_step(batch)
+                                               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/unsupervised_learning/flow_models/normalizing_flow/training.py", line 44, in train_step
+    pixels = pixels.to(self.device)
+             ^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

@@ -1,0 +1,75 @@
+Traceback (most recent call last):                                                                                 
+Epoch: 1/100 - Avg Total Loss: 0.1148 - Avg Domain Source Loss: 0.0425 - Avg Domain Target Loss: 0.0495 - LR: 0.0009997535269026829
+Epoch: 2/100 - Avg Total Loss: 0.0428 - Avg Domain Source Loss: 0.0121 - Avg Domain Target Loss: 0.0158 - LR: 0.0009990143508499217
+Epoch: 3/100 - Avg Total Loss: 0.0327 - Avg Domain Source Loss: 0.0139 - Avg Domain Target Loss: 0.0188 - LR: 0.0009977832013192385
+Epoch: 4/100 - Avg Total Loss: 0.0265 - Avg Domain Source Loss: 0.0148 - Avg Domain Target Loss: 0.0214 - LR: 0.0009960612933065818
+Epoch: 5/100 - Avg Total Loss: 0.0278 - Avg Domain Source Loss: 0.0668 - Avg Domain Target Loss: 0.0766 - LR: 0.0009938503261272714
+Epoch: 6/100 - Avg Total Loss: 0.0255 - Avg Domain Source Loss: 0.0789 - Avg Domain Target Loss: 0.0928 - LR: 0.00099115248173898
+Epoch: 7/100 - Avg Total Loss: 0.0238 - Avg Domain Source Loss: 0.0829 - Avg Domain Target Loss: 0.0942 - LR: 0.0009879704225884043
+Epoch: 8/100 - Avg Total Loss: 0.0237 - Avg Domain Source Loss: 0.0987 - Avg Domain Target Loss: 0.1117 - LR: 0.0009843072889837512
+Epoch: 9/100 - Avg Total Loss: 0.0246 - Avg Domain Source Loss: 0.1099 - Avg Domain Target Loss: 0.1295 - LR: 0.000980166695995633
+Epoch: 10/100 - Avg Total Loss: 0.0242 - Avg Domain Source Loss: 0.1184 - Avg Domain Target Loss: 0.1407 - LR: 0.0009755527298894294
+Epoch: 11/100 - Avg Total Loss: 0.0243 - Avg Domain Source Loss: 0.1244 - Avg Domain Target Loss: 0.1492 - LR: 0.0009704699440926358
+Epoch: 12/100 - Avg Total Loss: 0.0248 - Avg Domain Source Loss: 0.1370 - Avg Domain Target Loss: 0.1602 - LR: 0.0009649233547011817
+Epoch: 13/100 - Avg Total Loss: 0.0247 - Avg Domain Source Loss: 0.1471 - Avg Domain Target Loss: 0.1795 - LR: 0.0009589184355291487
+Epoch: 14/100 - Avg Total Loss: 0.0258 - Avg Domain Source Loss: 0.1557 - Avg Domain Target Loss: 0.1855 - LR: 0.000952461112706777
+Epoch: 15/100 - Avg Total Loss: 0.0258 - Avg Domain Source Loss: 0.1590 - Avg Domain Target Loss: 0.1874 - LR: 0.00094555775883209
+Epoch: 16/100 - Avg Total Loss: 0.0259 - Avg Domain Source Loss: 0.1672 - Avg Domain Target Loss: 0.1975 - LR: 0.0009382151866819101
+Epoch: 17/100 - Avg Total Loss: 0.0273 - Avg Domain Source Loss: 0.1716 - Avg Domain Target Loss: 0.2036 - LR: 0.0009304406424884702
+Epoch: 18/100 - Avg Total Loss: 0.0262 - Avg Domain Source Loss: 0.1825 - Avg Domain Target Loss: 0.2139 - LR: 0.000922241798788257
+Epoch: 19/100 - Avg Total Loss: 0.0289 - Avg Domain Source Loss: 0.1927 - Avg Domain Target Loss: 0.2242 - LR: 0.0009136267468501441
+Epoch: 20/100 - Avg Total Loss: 0.0280 - Avg Domain Source Loss: 0.1880 - Avg Domain Target Loss: 0.2233 - LR: 0.0009046039886902867
+Epoch: 21/100 - Avg Total Loss: 0.0296 - Avg Domain Source Loss: 0.2075 - Avg Domain Target Loss: 0.2440 - LR: 0.0008951824286816577
+Epoch: 22/100 - Avg Total Loss: 0.0302 - Avg Domain Source Loss: 0.2243 - Avg Domain Target Loss: 0.2556 - LR: 0.0008853713647665071
+Epoch: 23/100 - Avg Total Loss: 0.0305 - Avg Domain Source Loss: 0.2233 - Avg Domain Target Loss: 0.2609 - LR: 0.0008751804792804149
+Epoch: 24/100 - Avg Total Loss: 0.0312 - Avg Domain Source Loss: 0.2333 - Avg Domain Target Loss: 0.2748 - LR: 0.0008646198293969954
+Epoch: 25/100 - Avg Total Loss: 0.0308 - Avg Domain Source Loss: 0.2346 - Avg Domain Target Loss: 0.2755 - LR: 0.0008536998372026807
+Epoch: 26/100 - Avg Total Loss: 0.0338 - Avg Domain Source Loss: 0.2457 - Avg Domain Target Loss: 0.2859 - LR: 0.0008424312794113804
+Epoch: 27/100 - Avg Total Loss: 0.0324 - Avg Domain Source Loss: 0.2480 - Avg Domain Target Loss: 0.2856 - LR: 0.0008308252767291644
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/meta_learning/transfer_learning/domain_adaptation/dann/main.py", line 50, in <module>
+    main()
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/meta_learning/transfer_learning/domain_adaptation/dann/main.py", line 46, in main
+    train_total_losses, train_source_losses, train_target_losses = trainer.train()
+                                                                   ^^^^^^^^^^^^^^^
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/meta_learning/transfer_learning/domain_adaptation/dann/training.py", line 130, in train
+    self.train_one_epoch(epoch)
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/meta_learning/transfer_learning/domain_adaptation/dann/training.py", line 92, in train_one_epoch
+    total_loss, domain_loss_source, domain_loss_target = self.train_step(source_batch, target_batch, alpha)
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/meta_learning/transfer_learning/domain_adaptation/dann/training.py", line 65, in train_step
+    class_output_source, domain_output_source = self.model(images_source, alpha)
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kajetan/miniconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kajetan/miniconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1844, in _call_impl
+    return inner()
+           ^^^^^^^
+  File "/home/kajetan/miniconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1790, in inner
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/meta_learning/transfer_learning/domain_adaptation/dann/dann.py", line 84, in forward
+    features = self.feature(x)
+               ^^^^^^^^^^^^^^^
+  File "/home/kajetan/miniconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kajetan/miniconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kajetan/Documents/MiniProjectsComputerVision/meta_learning/transfer_learning/domain_adaptation/dann/dann.py", line 30, in forward
+    x = self.conv1(x) # (batch_size, 32, 24, 24)
+        ^^^^^^^^^^^^^
+  File "/home/kajetan/miniconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kajetan/miniconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kajetan/miniconda3/lib/python3.11/site-packages/torch/nn/modules/conv.py", line 554, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kajetan/miniconda3/lib/python3.11/site-packages/torch/nn/modules/conv.py", line 549, in _conv_forward
+    return F.conv2d(
+           ^^^^^^^^^
+KeyboardInterrupt

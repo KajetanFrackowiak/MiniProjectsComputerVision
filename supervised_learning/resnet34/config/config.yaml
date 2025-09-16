@@ -1,0 +1,10 @@
+training:
+  learning_rate: 0.001
+  batch_size: 64
+  epochs: 10
+
+inference:
+  batch_size: 64
+
+data:
+  cifar10: "../../data"
