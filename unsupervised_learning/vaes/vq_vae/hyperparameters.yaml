@@ -1,0 +1,15 @@
+batch_size: 64
+learning_rate: 0.001
+epochs: 200
+
+input_dim: 3 # rgb
+output_dim: 3 
+latent_dim: 128
+num_embeddings: 512
+embedding_dim: 128
+commitment_cost: 0.25
+eta_min: 0.000001
+
+checkpoint_interval: 20
+checkpoints_dir: "checkpoints"
+project_name: "VQ VAE"
