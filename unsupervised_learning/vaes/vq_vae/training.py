@@ -50,7 +50,7 @@ class Trainer:
         z_e = self.encoder(images)[0]
         z_q, vq_loss, _ = self.quantizer(
             z_e.unsqueeze(-1).unsqueeze(-1)
-        )  # add H,W for VQ
+        )  # add H,W for VQ, vq_loss = codebook loss + commitment loss
         x_recon = self.decoder(z_q.view(z_q.size(0), -1))
 
 
