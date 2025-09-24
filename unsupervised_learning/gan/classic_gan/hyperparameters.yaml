@@ -1,0 +1,17 @@
+batch_size: 64
+latent_dim: 100
+hidden_dim: 128
+img_dim: 784
+gen_learning_rate: 0.0002
+disc_learning_rate: 0.0002
+gen_eta_min: 0.00001
+disc_eta_min: 0.00001
+gen_beta1: 0.5
+gen_beta2: 0.999
+disc_beta1: 0.5
+disc_beta2: 0.999
+checkpoint_dir: "checkpoints"
+checkpoint_interval: 10
+epochs: 100
+project_name: "GAN"
+n_samples: 5000
