@@ -1,0 +1,11 @@
+batch_size: 64
+latent_dim: 128
+num_epochs: 100
+generator_learning_rate: 0.0001
+critic_learning_rate: 0.0004
+generator_transition_steps: 100000
+critic_transition_steps: 100000
+critic_steps: 5
+checkpoint_interval: 5
+generator_n_filters: 128
+critic_n_filters: 128
