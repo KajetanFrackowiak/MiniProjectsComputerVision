@@ -23,6 +23,12 @@ def main():
         action="store_true",
         help="Apply spectral normalization to the critic",
     )
+    parser.add_argument(
+        "--resume_from",
+        type=str,
+        default=None,
+        help="Path to checkpoint to resume from (e.g., checkpoints/checkpoint_epoch_5)",
+    )
     args = parser.parse_args()
 
     print(f"Default backend: {jax.default_backend()}")
@@ -71,10 +77,12 @@ def main():
             critic_steps=config["critic_steps"],
         )
 
+        # Train (will handle checkpoint loading internally if resume_from is provided)
         train_stats = trainer.train(
-            train_loader(),
+            train_loader,  # Pass the function, not the result of calling it
             num_epochs=config["num_epochs"],
             checkpoint_interval=config["checkpoint_interval"],
+            resume_from=args.resume_from,  # None if not resuming
         )
 
         save_stats(train_stats, file_path="stats/training/training_stats.json")
