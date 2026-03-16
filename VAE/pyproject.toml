@@ -1,0 +1,46 @@
+[project]
+name = "VAE"
+version = "0.1.0"
+description = "A Variational Autoencoder implementation in Python."
+requires-python = "==3.11.*"
+authors = [
+    { name = "Kajetan Frąckowiak" }
+]
+
+dependencies = [
+    "datasets",
+    "opencv-python",
+    "importlib-resources",
+    "jax[cuda12]",       
+    "nvidia-cudnn-cu12==8.9.2.26",    
+    "grain",
+    "flax",
+    "optax",
+    "orbax-checkpoint",
+    "dm-pix",
+    "matplotlib",
+    "numpy",
+    "wandb",
+]
+
+
+[tool.uv]
+default-groups = ["dev"]
+find-links = ["https://storage.googleapis.com/jax-releases/jax_cuda_releases.html"]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.7",
+    "pre-commit>=4.0"
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "NPY", "UP"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
