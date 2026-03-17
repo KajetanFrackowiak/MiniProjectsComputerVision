@@ -55,7 +55,7 @@ Quantitative results demonstrate stable convergence. Note that CelebA shows a hi
 
 <figure>
     <img src="src/plots/celeba_recon_grid_2x8.png" alt="CelebA Reconstruction Profiel">
-    <figcaption align="Center"></b>Figure 4:</b> CelebA Visualization Profile.</figcaption>
+    <figcaption align="center"><b>Figure 4:</b> CelebA Visualization Profile.</figcaption>
 </figure>
 
 ---
