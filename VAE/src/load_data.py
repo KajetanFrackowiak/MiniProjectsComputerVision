@@ -1,7 +1,13 @@
+from typing import Any, Protocol
+
 import cv2
 import grain.python as grain
 import numpy as np
 from datasets import load_dataset
+
+
+class PreprocessFn(Protocol):
+    def __call__(self, sample: dict[str, Any], *, target_size: int) -> dict[str, Any]: ...
 
 
 def cifar10_preprocess(sample, target_size: int = 32):
@@ -37,29 +43,21 @@ def get_data_loader(
     batch_size: int,
     seed: int,
     split: str,
-    preprocess_fn: callable,
+    preprocess_fn: PreprocessFn,
     target_size: int,
     repeat: bool = True,
 ):
-    # 1. Załadowanie źródła
     source = load_dataset(dataset_path, split=split)
 
-    # 2. Utworzenie MapDataset
     ds = grain.MapDataset.source(source)
 
-    # 3. Tasowanie globalne
     ds = ds.shuffle(seed=seed)
 
-    # 4. KLUCZOWA ZMIANA: Wywołujemy repeat() na MapDataset
-    # MapDataset posiada metodę repeat i jest ona przekazywana do iteratora.
     if repeat:
         ds = ds.repeat()
 
-    # 5. Mapowanie preprocessingu
     ds = ds.map(lambda x: preprocess_fn(x, target_size=target_size))
 
-    # 6. Konwersja na IterDataset i batchowanie
-    # Teraz to_iter_dataset() stworzy iterator, który już wie, że ma się powtarzać.
     it_ds = ds.to_iter_dataset()
     it_ds = it_ds.batch(batch_size, drop_remainder=(split == "train"))
 

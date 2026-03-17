@@ -197,7 +197,6 @@ def main():
     dataset_name = args.dataset.split("/")[-1]
     save_stats(history, f"results/{dataset_name}_training_history.json")
 
-    # Save the final model
     os.makedirs("models", exist_ok=True)
     final_mngr = ocp.CheckpointManager(
         os.path.abspath(f"models/{dataset_name}_model"),
