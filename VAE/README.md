@@ -1,6 +1,6 @@
 # Variational Auto-Encoder (VAE) Reimplementation
 
-A clean, modular PyTorch implementation of the **Variational Auto-Encoder (VAE)** as proposed by Kingma and Welling in ["Auto-Encoding Variational Bayes"](https://arxiv.org/abs/1312.6114).
+A clean, modular **JAX/Flax (NNX)** implementation of the **Variational Auto-Encoder (VAE)** as proposed by Kingma and Welling in ["Auto-Encoding Variational Bayes"](https://arxiv.org/abs/1312.6114).
 
 This repository evaluates the generative and reconstructive capabilities of VAEs on the **CIFAR-10** and **CelebA** datasets.
 
@@ -30,12 +30,17 @@ Quantitative results demonstrate stable convergence. Note that CelebA shows a hi
 ### Convergence Visualizations
 
 #### CIFAR-10 Training Profile
-![CIFAR-10 Plot](src/plots/cifar10_training_plot.png)
-*Figure 1: The model reaches a stable plateau by epoch 20 with minimal generalization gap.*
+<figure>
+  <img src="src/plots/cifar10_training_plot.png" alt="CIFAR-10 Training Profile">
+  <figcaption align="center"><b>Figure 1:</b> CIFAR-10 Training Profile. The model reaches a stable plateau by epoch 20 with a minimal generalization gap.</figcaption>
+</figure>
 
-#### CelebA Training Profile
-![CelebA Plot](src/plots/celeba_training_plot.png)
-*Figure 2: Steady convergence over 100 epochs. The higher loss is a function of the increased pixel count.*
+<br>
+
+<figure>
+  <img src="src/plots/celeba_training_plot.png" alt="CelebA Training Profile">
+  <figcaption align="center"><b>Figure 2:</b> CelebA Training Profile. Steady convergence over 100 epochs. The higher loss is a function of the increased pixel count.</figcaption>
+</figure>
 
 ---
 
@@ -45,6 +50,9 @@ Configurations are managed via `src/hyperparameters.yaml`.
 
 | Parameter | CIFAR-10 | CelebA |
 | :--- | :--- | :--- |
+| **Image Resolution**| $32 \times 32$| $64 \times 64$|
+| **Latent Dimension**| 20 | 128 |
+| **Encoder Features**| $[32, 64, 128]$| $[32, 64, 128, 256]$|
 | **Learning Rate** | 0.001 | 0.0005 |
 | **Batch Size** | 64 | 128 |
 | **Epochs** | 50 | 100 |
