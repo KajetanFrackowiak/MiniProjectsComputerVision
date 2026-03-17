@@ -70,7 +70,3 @@ python src/train.py --dataset uoft-cs/cifar10
 
 # CelebA
 python src/train.py --dataset flwrlabs/celeba
-
-License
-Licensed under the MIT License.
-
