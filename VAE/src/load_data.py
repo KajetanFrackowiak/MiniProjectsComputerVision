@@ -4,51 +4,63 @@ import numpy as np
 from datasets import load_dataset
 
 
-def cpu_preprocess(features: dict) -> dict:
-    img = np.array(features["image"])
-    if img.ndim == 2:
-        img = np.stack([img] * 3, axis=-1)
-    elif img.shape[-1] == 1:
-        img = np.concatenate([img] * 3, axis=-1)
+def cifar10_preprocess(sample, target_size: int = 32):
+    # Unikamy zbędnego kopiowania i resize, jeśli rozmiar się zgadza
+    image = np.array(sample["img"])
+    if image.shape[0] != target_size or image.shape[1] != target_size:
+        image = cv2.resize(image, (target_size, target_size))
 
-    if img.shape[:2] != (32, 32):
-        img = cv2.resize(img, (32, 32), interpolation=cv2.INTER_LINEAR)
+    # Przeskalowanie do [-1, 1]
+    image = image.astype(np.float32) / 127.5 - 1.0
+    return {"image": image}
 
-    raw_label = features["label"]
-    if isinstance(raw_label, dict):
-        label = raw_label["digit"][0]
-    else:
-        label = raw_label
 
-    return {"image": img.astype(np.float32) / 255.0, "label": int(label)}
+def celeba_preprocess(sample, target_size=64):
+    image = np.array(sample["image"])
+
+    # Efektywny Center Crop
+    h, w = image.shape[:2]
+    min_size = min(h, w)
+    start_h = (h - min_size) // 2
+    start_w = (w - min_size) // 2
+    image = image[start_h : start_h + min_size, start_w : start_w + min_size]
+
+    # INTER_AREA jest najlepsze do zmniejszania obrazów (zapobiega aliasingowi)
+    image = cv2.resize(image, (target_size, target_size), interpolation=cv2.INTER_AREA)
+
+    image = (image.astype(np.float32) / 127.5) - 1.0
+    return {"image": image}
 
 
 def get_data_loader(
-    batch_size: int, seed1: int, seed2: int, split: str = "train"
-) -> grain.IterDataset:
-    source1 = load_dataset("ylecun/mnist", split=split)
-    source2 = load_dataset("Genius-Society/svhn", split=split)
+    dataset_path: str,
+    batch_size: int,
+    seed: int,
+    split: str,
+    preprocess_fn: callable,
+    target_size: int,
+    repeat: bool = True,
+):
+    # 1. Załadowanie źródła
+    source = load_dataset(dataset_path, split=split)
 
-    ds1 = (
-        grain.MapDataset.source(source1)
-        .filter(lambda x: int(x["label"]) <= 4)
-        .seed(seed1)
-        .shuffle()
-        .repeat()
-    )
+    # 2. Utworzenie MapDataset
+    ds = grain.MapDataset.source(source)
 
-    ds2 = (
-        grain.MapDataset.source(source2)
-        .filter(lambda x: int(x["label"]["digit"][0]) > 4)
-        .seed(seed2)
-        .shuffle()
-        .repeat()
-    )
+    # 3. Tasowanie globalne
+    ds = ds.shuffle(seed=seed)
 
-    ds = grain.MapDataset.mix([ds1, ds2], weights=[0.7, 0.3])
+    # 4. KLUCZOWA ZMIANA: Wywołujemy repeat() na MapDataset
+    # MapDataset posiada metodę repeat i jest ona przekazywana do iteratora.
+    if repeat:
+        ds = ds.repeat()
 
-    ds = ds.to_iter_dataset()
-    ds = ds.map(cpu_preprocess)
-    ds = ds.batch(batch_size, drop_remainder=True)
+    # 5. Mapowanie preprocessingu
+    ds = ds.map(lambda x: preprocess_fn(x, target_size=target_size))
 
-    return ds
+    # 6. Konwersja na IterDataset i batchowanie
+    # Teraz to_iter_dataset() stworzy iterator, który już wie, że ma się powtarzać.
+    it_ds = ds.to_iter_dataset()
+    it_ds = it_ds.batch(batch_size, drop_remainder=(split == "train"))
+
+    return it_ds
