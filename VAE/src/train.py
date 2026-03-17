@@ -1,3 +1,4 @@
+import argparse
 import os
 
 import dm_pix as pix
@@ -6,10 +7,10 @@ import jax.numpy as jnp
 import numpy as np
 import optax
 import orbax.checkpoint as ocp
+import wandb
 from flax import nnx
 
-import wandb
-from load_data import get_data_loader
+from load_data import celeba_preprocess, cifar10_preprocess, get_data_loader
 from model import VAE
 from utils import load_config, save_stats
 
@@ -40,16 +41,47 @@ def eval_step(model, batch_images, key):
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Train a VAE on CIFAR-10 or CelebA")
+    parser.add_argument(
+        "--dataset",
+        type=str,
+        choices=["uoft-cs/cifar10", "flwrlabs/celeba"],
+        default="uoft-cs/cifar10",
+        help="Dataset to use",
+    )
+    args = parser.parse_args()
+
     config = load_config("hyperparameters.yaml")
-    wandb.init(project="VAE", config=config)
+    wandb.init(project="VAE_" + args.dataset.split("/")[-1], config=config)
 
     master_key = jax.random.PRNGKey(0)
     model_key, data_key, train_key = jax.random.split(master_key, 3)
 
-    model = VAE(config["latent_dim"], rngs=nnx.Rngs(model_key))
-    schedule = optax.cosine_decay_schedule(
-        config["learning_rate"], config["decay_steps"], alpha=config["alpha"]
-    )
+    if args.dataset == "uoft-cs/cifar10":
+        model = VAE(
+            latents=config["cifar10_latent_dim"],
+            input_size=config["cifar10_img_size"],
+            features=config["cifar10_features"],
+            rngs=nnx.Rngs(model_key),
+        )
+        schedule = optax.cosine_decay_schedule(
+            config["cifar10_learning_rate"],
+            config["cifar10_decay_steps"],
+            alpha=config["cifar10_alpha"],
+        )
+    elif args.dataset == "flwrlabs/celeba":
+        model = VAE(
+            latents=config["celeba_latent_dim"],
+            input_size=config["celeba_img_size"],
+            features=config["celeba_features"],
+            rngs=nnx.Rngs(model_key),
+        )
+        schedule = optax.cosine_decay_schedule(
+            config["celeba_learning_rate"],
+            config["celeba_decay_steps"],
+            alpha=config["celeba_alpha"],
+        )
+
     tx = optax.adam(learning_rate=schedule)
     optimizer = nnx.Optimizer(model, tx, wrt=nnx.Param)
 
@@ -59,20 +91,55 @@ def main():
         options=ocp.CheckpointManagerOptions(max_to_keep=5, create=True),
     )
 
-    data_seeds = jax.random.randint(data_key, (4,), 0, 1000000)
-    seed1, seed2, seed3, seed4 = [int(s) for s in data_seeds]
-    train_ds = get_data_loader(config["batch_size"], seed1, seed2, split="train")
-    val_ds = get_data_loader(config["batch_size"], seed3, seed4, split="test")
+    if args.dataset == "uoft-cs/cifar10":
+        train_split = "train[:90%]"
+        val_split = "train[90%:]"
+        batch_size = config["cifar10_batch_size"]
+        preprocess_fn = cifar10_preprocess
+        img_size = config["cifar10_img_size"]
+        num_epochs = config["cifar10_num_epochs"]
+    elif args.dataset == "flwrlabs/celeba":
+        train_split = "train"
+        val_split = "valid"
+        batch_size = config["celeba_batch_size"]
+        preprocess_fn = celeba_preprocess
+        img_size = config["celeba_img_size"]
+        num_epochs = config["celeba_num_epochs"]
+
+    seed1, seed2 = jax.random.split(data_key, 2)
+    seed1, seed2 = int(seed1[0]), int(seed2[0])
+    train_ds = get_data_loader(
+        dataset_path=args.dataset,
+        batch_size=batch_size,
+        seed=seed1,
+        split=train_split,
+        preprocess_fn=preprocess_fn,
+        target_size=img_size,
+        repeat=True,
+    )
+
+    val_ds = get_data_loader(
+        dataset_path=args.dataset,
+        batch_size=batch_size,
+        seed=seed2,
+        split=val_split,
+        preprocess_fn=preprocess_fn,
+        target_size=img_size,
+        repeat=True,
+    )
 
     train_iter = iter(train_ds)
     val_iter = iter(val_ds)
 
     global_step = 0
-    steps_per_epoch = 500
+    if args.dataset == "uoft-cs/cifar10":
+        steps_per_epoch = config["cifar10_steps_per_epoch"]
+    elif args.dataset == "flwrlabs/celeba":
+        steps_per_epoch = config["celeba_steps_per_epoch"]
 
     history = {"epoch": [], "train_loss": [], "val_loss": []}
 
-    for epoch in range(config["num_epochs"]):
+    for epoch in range(num_epochs):
         epoch_train_losses = []
 
         # --- TRAINING ---
@@ -99,8 +166,12 @@ def main():
             eval_logs.append(m)
 
             if i == 0:
-                vis_orig = (val_batch["image"][:8] * 255).astype(jnp.uint8)
-                vis_recon = (recon_samples[:8] * 255).astype(jnp.uint8)
+                vis_orig = ((val_batch["image"][:8] + 1.0) / 2.0 * 255).astype(
+                    jnp.uint8
+                )  # [-1, 1] -> [0, 255]
+                vis_recon = ((recon_samples[:8] + 1.0) / 2.0 * 255).astype(
+                    jnp.uint8
+                )  # [-1, 1] -> [0, 255]
                 combined = np.array(jnp.concatenate([vis_orig, vis_recon], axis=2))
                 wandb.log(
                     {"visual/reconstructions": [wandb.Image(img) for img in combined]},
@@ -122,7 +193,17 @@ def main():
         print(f"Epoch {epoch + 1} | Train Loss: {avg_train:.4f} | Val Loss: {avg_val['total']:.4f}")
 
     os.makedirs("results", exist_ok=True)
-    save_stats(history, "results/training_history.json")
+
+    dataset_name = args.dataset.split("/")[-1]
+    save_stats(history, f"results/{dataset_name}_training_history.json")
+
+    # Save the final model
+    os.makedirs("models", exist_ok=True)
+    final_mngr = ocp.CheckpointManager(
+        os.path.abspath(f"models/{dataset_name}_model"),
+        ocp.Checkpointer(ocp.PyTreeCheckpointHandler()),
+    )
+    final_mngr.save(0, nnx.state(model))
 
 
 if __name__ == "__main__":

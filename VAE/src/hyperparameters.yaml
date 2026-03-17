@@ -1,6 +1,19 @@
-batch_size: 150
-learning_rate: 0.001
-decay_steps: 25000
-alpha: 0.01
-num_epochs: 50
-latent_dim: 20
+cifar10_batch_size: 64
+cifar10_learning_rate: 0.001
+cifar10_decay_steps: 25000
+cifar10_alpha: 0.1
+cifar10_num_epochs: 50
+cifar10_latent_dim: 20
+cifar10_img_size: 32
+cifar10_features: [32, 64, 128]
+cifar10_steps_per_epoch: 782
+
+celeba_batch_size: 128
+celeba_learning_rate: 0.0005
+celeba_decay_steps: 120000
+celeba_alpha: 0.1
+celeba_num_epochs: 100
+celeba_latent_dim: 128
+celeba_img_size: 64
+celeba_features: [32, 64, 128, 256]
+celeba_steps_per_epoch: 1628

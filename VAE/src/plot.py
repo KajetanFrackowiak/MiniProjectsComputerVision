@@ -1,5 +1,7 @@
+import argparse
 import json
 import os
+
 import matplotlib.pyplot as plt
 
 
@@ -36,10 +38,14 @@ def plot(json_path, output_path):
     ax.legend(loc="upper right")
 
     plt.tight_layout()
-    plt.savefig(output_path, format="pdf", bbox_inches="tight")
+    plt.savefig(output_path, format="png", bbox_inches="tight")
     print(f"Clean plot saved to {output_path}")
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Plot training history")
+    parser.add_argument("--json_path", type=str, default="results/cifar10_training_history.json")
+    parser.add_argument("--output_path", type=str, default="plots/cifar10_training_plot.png")
+    args = parser.parse_args()
     os.makedirs("plots", exist_ok=True)
-    plot("results/training_history.json", "plots/training_plot.pdf")
+    plot(args.json_path, args.output_path)

@@ -3,4 +3,5 @@ wandb/
 
 .venv/
 .ruff_cache/
+.vscode/
 checkpoints/
