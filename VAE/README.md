@@ -24,8 +24,8 @@ Quantitative results demonstrate stable convergence. Note that CelebA shows a hi
 
 | Dataset | Epochs | Final Train Loss | Final Val Loss | Test Loss |
 | :--- | :--- | :--- | :--- | :--- |
-| **CIFAR-10** | 50 | 220.94 | 222.44 | **224.08** |
-| **CelebA** | 100 | 445.06 | 449.99 | **443.62** |
+| **CIFAR-10** | $50$ | $220.94$ | $222.44$ | $\textbf{224.08}$ |
+| **CelebA** | $100$ | $445.06$ | $449.99$ | $\textbf{443.62}$ |
 
 ### Convergence Visualizations
 
@@ -67,12 +67,12 @@ Configurations are managed via `src/hyperparameters.yaml`.
 | Parameter | CIFAR-10 | CelebA |
 | :--- | :--- | :--- |
 | **Image Resolution**| $32 \times 32$| $64 \times 64$|
-| **Latent Dimension**| 20 | 128 |
+| **Latent Dimension**| $20$ | $128$ |
 | **Encoder Features**| $[32, 64, 128]$| $[32, 64, 128, 256]$|
-| **Learning Rate** | 0.001 | 0.0005 |
-| **Batch Size** | 64 | 128 |
-| **Epochs** | 50 | 100 |
-| **Latent Dim** | 128 | 256 |
+| **Learning Rate** | $0.001$ | $0.0005$ |
+| **Batch Size** | $64$ | $128$ |
+| **Epochs** | $50$ | $100$ |
+| **Latent Dim** | $128$ | $256$ |
 
 ---
 
