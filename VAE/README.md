@@ -37,9 +37,25 @@ Quantitative results demonstrate stable convergence. Note that CelebA shows a hi
 
 <br>
 
+#### CelebA Training Profile
 <figure>
   <img src="src/plots/celeba_training_plot.png" alt="CelebA Training Profile">
   <figcaption align="center"><b>Figure 2:</b> CelebA Training Profile. Steady convergence over 100 epochs. The higher loss is a function of the increased pixel count.</figcaption>
+</figure>
+
+
+### Reconstruction Visualizations
+
+<figure>
+    <img src="src/plots/cifar10_recon_grid_2x8.png" alt="CIFAR-10 Reconstruction Profile">
+    <figcaption align="center"><b>Figure 3:</b> CIFAR-10 Visualization Profile.</figcaption>
+</figure>
+
+<br>
+
+<figure>
+    <img src="src/plots/celeba_recon_grid_2x8.png" alt="CelebA Reconstruction Profiel">
+    <figcaption align="Center"></b>Figure 4:</b> CelebA Visualization Profile.</figcaption>
 </figure>
 
 ---
