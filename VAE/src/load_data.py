@@ -11,7 +11,6 @@ class PreprocessFn(Protocol):
 
 
 def cifar10_preprocess(sample, target_size: int = 32):
-    # Unikamy zbędnego kopiowania i resize, jeśli rozmiar się zgadza
     image = np.array(sample["img"])
     if image.shape[0] != target_size or image.shape[1] != target_size:
         image = cv2.resize(image, (target_size, target_size))
@@ -24,14 +23,12 @@ def cifar10_preprocess(sample, target_size: int = 32):
 def celeba_preprocess(sample, target_size=64):
     image = np.array(sample["image"])
 
-    # Efektywny Center Crop
     h, w = image.shape[:2]
     min_size = min(h, w)
     start_h = (h - min_size) // 2
     start_w = (w - min_size) // 2
     image = image[start_h : start_h + min_size, start_w : start_w + min_size]
 
-    # INTER_AREA jest najlepsze do zmniejszania obrazów (zapobiega aliasingowi)
     image = cv2.resize(image, (target_size, target_size), interpolation=cv2.INTER_AREA)
 
     image = (image.astype(np.float32) / 127.5) - 1.0
