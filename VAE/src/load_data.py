@@ -15,7 +15,6 @@ def cifar10_preprocess(sample, target_size: int = 32):
     if image.shape[0] != target_size or image.shape[1] != target_size:
         image = cv2.resize(image, (target_size, target_size))
 
-    # Przeskalowanie do [-1, 1]
     image = image.astype(np.float32) / 127.5 - 1.0
     return {"image": image}
 
