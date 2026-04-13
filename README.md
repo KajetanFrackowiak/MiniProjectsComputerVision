@@ -3,7 +3,8 @@
 A collection of computer vision implementations.
 
 ## Projects
-- **[VAE](./VAE)**: Variational Auto-Encoder with JAX tested on CIFAR-10 and CelebA.
+- **[VAE](./VAE)**: Variational Auto-Encoder with JAX trained on CIFAR-10 and CelebA.
+- **[Flow Matching](./NormalizingFlow/flow_matching/)**: Flow Matching with JAX trained on CIFAR-10 and CelebA.
 
 ## Setup
 These repositories uses [uv](https://astral.sh/uv/) for dependency management.
