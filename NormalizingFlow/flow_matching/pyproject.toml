@@ -1,0 +1,47 @@
+[project]
+name = "flow-matching"
+version = "0.1.0"
+requires-python = "==3.11.*"
+authors = [
+    { name = "Kajetan Frąckowiak" }
+]
+dependencies = [
+    "datasets",
+    "opencv-python",
+    "jax[cuda12]==0.4.28",       
+    "nvidia-cudnn-cu12==8.9.2.26",    
+    "grain",
+    "flax==0.10.2",
+    "optax",
+    "orbax-checkpoint",
+    "dm-pix",
+    "matplotlib",
+    "numpy",
+    "wandb",
+]
+
+[tool.uv]
+default-groups = ["dev"]
+find-links = ["https://storage.googleapis.com/jax-releases/jax_cuda_releases.html"]
+
+
+[dependency-groups]
+dev = [
+    "ruff>=0.7",
+    "pre-commit>=4.0",
+    "mypy>=1.0",
+    "types-PyYAML",
+    "types-tqdm",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+python_version = "3.11"
