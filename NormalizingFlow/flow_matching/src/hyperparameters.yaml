@@ -1,0 +1,15 @@
+cifar10_batch_size: 64
+cifar10_learning_rate: 0.001
+cifar10_training_steps: 39100
+cifar10_decay_steps: 39100
+cifar10_alpha: 0.1
+cifar10_img_size: 32
+cifar10_base_dim: 128
+
+celeba_batch_size: 32
+celeba_learning_rate: 0.0005
+celeba_training_steps: 162800
+celeba_decay_steps: 162800
+celeba_alpha: 0.1
+celeba_img_size: 64
+celeba_base_dim: 64
