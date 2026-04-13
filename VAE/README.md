@@ -1,24 +1,4 @@
-# Variational Auto-Encoder (VAE) Reimplementation
-
-A clean, modular **JAX/Flax (NNX)** implementation of the **Variational Auto-Encoder (VAE)** as proposed by Kingma and Welling in ["Auto-Encoding Variational Bayes"](https://arxiv.org/abs/1312.6114).
-
-This repository evaluates the generative and reconstructive capabilities of VAEs on the **CIFAR-10** and **CelebA** datasets.
-
-## Architecture & Objective
-
-The model maximizes the **Evidence Lower Bound (ELBO)**, which consists of a reconstruction term and a regularization term:
-
-$$\mathcal{L}(\theta, \phi; \mathbf{x}) = \mathbb{E}_{q_\phi(\mathbf{z}|\mathbf{x})}[\log p_\theta(\mathbf{x}|\mathbf{z})] - D_{KL}(q_\phi(\mathbf{z}|\mathbf{x}) || p_\theta(\mathbf{z}))$$
-
-- **Encoder:** Convolutional layers mapping inputs to the latent distribution parameters ($\mu, \sigma$).
-- **Bottleneck:** The reparameterization trick $z = \mu + \sigma \odot \epsilon$ where $\epsilon \sim \mathcal{N}(0, I)$.
-- **Decoder:** Transposed convolutions to map the latent vector $z$ back to the original image space.
-
----
-
-## Results
-
-Quantitative results demonstrate stable convergence. Note that CelebA shows a higher absolute loss due to its higher dimensionality ($64 \times 64 \times 3$) compared to CIFAR-10 ($32 \times 32 \times 3$).
+# Variational Auto-Encoder Reimplementation [Kingma & Welling, 2013](https://arxiv.org/abs/1312.6114) in JAX
 
 ### Performance Metrics
 
@@ -32,7 +12,7 @@ Quantitative results demonstrate stable convergence. Note that CelebA shows a hi
 #### CIFAR-10 Training Profile
 <figure>
   <img src="src/plots/cifar10_training_plot.png" alt="CIFAR-10 Training Profile">
-  <figcaption align="center"><b>Figure 1:</b> CIFAR-10 Training Profile. The model reaches a stable plateau by epoch 20 with a minimal generalization gap.</figcaption>
+  <figcaption align="center"><b>Figure 1:</b> CIFAR-10 Training Profile.</figcaption>
 </figure>
 
 <br>
@@ -40,7 +20,7 @@ Quantitative results demonstrate stable convergence. Note that CelebA shows a hi
 #### CelebA Training Profile
 <figure>
   <img src="src/plots/celeba_training_plot.png" alt="CelebA Training Profile">
-  <figcaption align="center"><b>Figure 2:</b> CelebA Training Profile. Steady convergence over 100 epochs. The higher loss is a function of the increased pixel count.</figcaption>
+  <figcaption align="center"><b>Figure 2:</b> CelebA Training Profile.</figcaption>
 </figure>
 
 
@@ -86,11 +66,3 @@ git clone https://github.com/KajetanFrackowiak/MiniProjectsComputerVision.git
 cd MiniProjectsComputerVision/VAE
 uv sync
 
-Reproducing Results
-To train the model using the provided configs:
-
-# CIFAR-10
-python src/train.py --dataset uoft-cs/cifar10
-
-# CelebA
-python src/train.py --dataset flwrlabs/celeba

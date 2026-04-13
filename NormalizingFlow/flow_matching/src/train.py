@@ -12,12 +12,10 @@ import numpy as np
 from flax import nnx
 from tqdm import tqdm
 
-# Assuming these are your local imports
 from data_loader import get_data_loader, cifar10_preprocess, celeba_preprocess
 from model import FlowMatchingModel
 from utils import load_yaml, save_json
 
-# --- Core Logic Functions ---
 
 
 @nnx.jit
@@ -68,7 +66,6 @@ def sample(model: nnx.Module, rng: jax.Array, num_samples=8, res=(32, 32, 3)):
     return x
 
 
-# --- Experiment Management ---
 
 
 class Experiment:
@@ -78,10 +75,8 @@ class Experiment:
         self.seed = args.seed
         self.dataset_key = "cifar10" if "cifar10" in args.dataset else "celeba"
 
-        # Setup Keys
         self.rngs = nnx.Rngs(self.seed)
 
-        # Initialize Model & Optimizer
         self.model = FlowMatchingModel(
             channels=3,
             base_dim=config[f"{self.dataset_key}_base_dim"],
@@ -95,7 +90,6 @@ class Experiment:
         )
         self.optimizer = nnx.Optimizer(self.model, optax.adam(self.schedule))
 
-        # Checkpointing
         self.mngr = ocp.CheckpointManager(
             os.path.abspath(f"checkpoints/{self.dataset_key}_seed_{self.seed}"),
             ocp.Checkpointer(ocp.PyTreeCheckpointHandler()),
@@ -111,16 +105,13 @@ class Experiment:
 
         avg_loss = float(np.mean(losses))
 
-        # Generate visual samples
         img_size = self.config[f"{self.dataset_key}_img_size"]
         vis_samples = sample(self.model, jax.random.key(step), res=(img_size, img_size, 3))
         vis_samples = np.array(jnp.clip((vis_samples + 1.0) * 127.5, 0, 255).astype(jnp.uint8))
 
-        # Return a dictionary of results instead of logging here
         return {"eval/loss_avg": avg_loss, "samples": [wandb.Image(s) for s in vis_samples]}
 
     def train(self):
-        # Data setup
         train_it = get_data_loader(
             dataset_path=self.args.dataset,
             batch_size=self.config[f"{self.dataset_key}_batch_size"],
@@ -147,11 +138,10 @@ class Experiment:
         training_steps = self.config[f"{self.dataset_key}_training_steps"]
         eval_every = self.config.get(f"{self.dataset_key}_eval_every", 1000)
 
-        # Consistent Naming in History
         history = {"step": [], "train/loss_avg": [], "eval/loss_avg": []}
         running_train_loss = []
 
-        os.makedirs("results", exist_ok=True)
+        os.makedirs("../results", exist_ok=True)
 
         pbar = tqdm(range(training_steps), desc=f"Training {self.dataset_key}")
         for step in pbar:
@@ -161,23 +151,18 @@ class Experiment:
             loss_val = float(metrics["loss"])
             running_train_loss.append(loss_val)
 
-            # --- Frequent Monitoring (Fast) ---
             if step % 100 == 0:
-                # Log as 'step' or 'raw' to distinguish from the window average
                 wandb.log({"train/loss_step": loss_val}, step=step)
                 pbar.set_postfix({"loss": f"{loss_val:.4f}"})
 
-            # --- Scientific Evaluation & Checkpointing (Slow) ---
             if step > 0 and step % eval_every == 0:
                 avg_train_loss = np.mean(running_train_loss)
                 eval_results = self.run_eval(val_it, step)  # WandB eval/loss_avg logged inside
 
-                # Update Local History
                 history["step"].append(int(step))
                 history["train/loss_avg"].append(float(avg_train_loss))
                 history["eval/loss_avg"].append(float(eval_results["eval/loss_avg"]))
 
-                # Log the true average to WandB
                 wandb.log(
                     {
                         "train/loss_avg": avg_train_loss,
@@ -187,9 +172,8 @@ class Experiment:
                     step=step,
                 )
 
-                # Reset tracker & Save
                 running_train_loss = []
-                save_json(history, f"results/history_{self.dataset_key}_seed_{self.seed}.json")
+                save_json(history, f"../results/history_{self.dataset_key}_seed_{self.seed}.json")
                 self.mngr.save(step, nnx.state(self.optimizer))
 
                 current_lr = self.schedule(step)
@@ -197,7 +181,7 @@ class Experiment:
                     f"\n[Step {step}] Train Avg: {avg_train_loss:.4f} | Val Avg: {eval_results['eval/loss_avg']:.4f} | LR: {current_lr:.6f}"
                 )
 
-        save_json(history, f"results/history_{self.dataset_key}_seed_{self.seed}_final.json")
+        save_json(history, f"../results/history_{self.dataset_key}_seed_{self.seed}_final.json")
 
         os.makedirs("models", exist_ok=True)
         final_mngr = ocp.CheckpointManager(

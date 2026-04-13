@@ -9,7 +9,6 @@ dependencies = [
     "datasets",
     "opencv-python",
     "jax[cuda12]==0.4.28",       
-    "nvidia-cudnn-cu12==8.9.2.26",    
     "grain",
     "flax==0.10.2",
     "optax",
